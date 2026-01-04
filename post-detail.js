@@ -14,7 +14,7 @@ async function fetchPostDetail() {
   try {
     const { data: post, error } = await client
       .from("posts")
-      .select("*")
+      .select(`*, profiles(username)`)
       .eq("id", postId)
       .single();
 
@@ -27,25 +27,25 @@ async function fetchPostDetail() {
     const isOwner = user && user.id === post.user_id;
 
     postDetail.innerHTML = `
-      <div class="card shadow">
-        ${post.imageUrl ? `<img src="${post.imageUrl}" class="card-img-top">` : ""}
-        <div class="card-body">
-          <span class="badge bg-primary mb-2">${post.category}</span>
-          <h3>${post.title}</h3>
-          <p class="mt-3">${post.content}</p>
-          <div class="text-muted small">Posted at: ${new Date(post.created_at).toLocaleString()}</div>
+  <div class="card shadow-sm border-0 rounded-3">
 
-          ${
-            isOwner
-              ? `<div class="mt-4 d-flex gap-2">
-                    <button class="btn btn-warning btn-sm" onclick="openEdit(${post.id})">Edit</button>
-                    <button class="btn btn-danger btn-sm" onclick="deletePost(${post.id})">Delete</button>
-                 </div>`
-              : ""
-          }
-        </div>
-      </div>
-    `;
+    <!-- Post Image -->
+    ${post.imageUrl ? `<img src="${post.imageUrl}" class="card-img-top" style="object-fit:cover; max-height:400px;">` : ""}
+
+    <!-- Card Body -->
+    <div class="card-body">
+      <span class="badge bg-primary mb-2">${post.category}</span>
+      <h3 class="card-title fw-bold mb-3">${post.title}</h3>
+      <p class="card-text text-secondary mb-3">${post.content}</p>
+      <div class="text-muted small mb-3">Posted at: ${new Date(post.created_at).toLocaleString()}</div>
+      <!-- User Info -->
+    <div class="card-header bg-white d-flex align-items-center gap-2 border-bottom">
+      <i class="bi bi-person-circle fs-4"></i>
+      <strong class="text-primary">${post.profiles?.username || "Unknown"}</strong>
+    </div>
+  </div>
+`;
+
 
   } catch (err) {
     console.error(err);
