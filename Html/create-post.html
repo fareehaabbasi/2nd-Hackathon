@@ -19,18 +19,24 @@
 
 <body>
   <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg admin-navbar">
+<nav class="navbar navbar-expand-lg admin-navbar bg-light shadow-sm mb-4">
   <div class="container-fluid">
 
-    <!-- Left -->
+    <!-- Brand / Left -->
     <span class="navbar-brand fw-bold">Post App</span>
 
-    <!-- Right -->
-    <div class="d-flex align-items-center gap-3">
+    <!-- Center Links -->
+    <div class="mx-auto d-none d-lg-flex gap-4">
+      <a href="/Html/All-posts.html" class="nav-link fw-bold">Home</a>
+      <a href="/Html/your-posts.html" class="nav-link fw-bold">Your Posts</a>
+      <a href="/Html/create-post.html" class="nav-link fw-bold active">Post Your Thoughts</a>
+    </div>
 
+    <!-- Right: User info + Logout -->
+    <div class="d-flex align-items-center gap-3">
       <!-- User Info -->
       <div class="user-info d-flex align-items-center gap-2">
-        <div class="user-avatar">
+        <div class="user-avatar rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center" style="width:35px; height:35px;">
           <i class="bi bi-person-fill"></i>
         </div>
         <span class="user-name">User Name</span>
@@ -40,8 +46,8 @@
       <button class="btn btn-logout btn-sm">
         Logout
       </button>
-
     </div>
+
   </div>
 </nav>
 

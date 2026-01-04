@@ -31,23 +31,27 @@ pImage.addEventListener("change", (e) => {
 });
 
 // ------------------------Upload Image File to Supabase Storage and Get URL
-const imageFile = document.getElementById("pimage").files[0];
-async function uploadImage(f) {
-  if (!f) return null; // agar file select nahi hai
-  const fileName = `${Date.now()}_${f.name}`;
+async function uploadImage(file) {
+  if (!file) return null;
+
+  const fileName = `${Date.now()}_${file.name}`;
+
   try {
+    // Upload file
     const { data, error } = await client.storage
       .from("post-images")
-      .upload(fileName, f);
+      .upload(fileName, file, { upsert: false });
 
     if (error) throw error;
 
+    // Use fileName directly to get public URL
     const { data: publicData } = client.storage
-      .from("posts")
-      .getPublicUrl(data.path);
-      console.log("Uploaded Image URL:", publicData.publicUrl);
+      .from("post-images")
+      .getPublicUrl(fileName);
 
+    console.log("Uploaded Image URL:", publicData.publicUrl);
     return publicData.publicUrl;
+
   } catch (err) {
     console.error("Upload Error:", err.message);
     return null;
@@ -59,7 +63,6 @@ const form = document.getElementById("createPostForm");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-
   showLoader();
 
   try {
@@ -68,46 +71,48 @@ form.addEventListener("submit", async (e) => {
       data: { user },
       error: userError,
     } = await client.auth.getUser();
-    if (userError || !user) {
-      throw new Error("User not authenticated");
-    }
 
-    // 2. Get form values
+    if (userError || !user) throw new Error("User not authenticated");
+
+    // Form values
     const title = document.getElementById("title").value.trim();
     const content = document.getElementById("content").value.trim();
     const category = document.getElementById("category").value;
     const imageFile = document.getElementById("pimage").files[0];
 
+    // Upload Image URL
+    const imageUrl = await uploadImage(imageFile);
 
-    // Upload Image Url if image is selected
-    const imageUrl = await uploadImage(pimage.files[0]);
+    // Insert Post
+    const { error } = await client.from("posts").insert([
+      {
+        user_id: user.id,
+        title,
+        content,
+        category,
+        imageUrl,
+      },
+    ]);
 
-      // Insert Post
-      const {error} = await client.from("posts").insert([
-        {
-            user_id: user.id,
-            title,
-            content,
-            category,
-            imageUrl: imageUrl,
-        }
-      ]);
+    if (error) throw error;
 
-      if (error) throw error;
+    Swal.fire({
+      icon: "success",
+      title: "Post Added",
+      text: "Your post has been added successfully!",
+    });
 
-      Swal.fire({
-        icon: "success",
-        title: "Product Added",
-        text: `Post has been added successfully!`,
-      }); 
-      form.reset();
+    form.reset();
+    const imgPreview = document.getElementById("imgPreview");
+    if (imgPreview) imgPreview.remove();
+
   } catch (error) {
     console.error("Error creating post:", error);
     Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: error.message,
-      });
+      icon: "error",
+      title: "Error",
+      text: error.message,
+    });
   } finally {
     hideLoader();
   }

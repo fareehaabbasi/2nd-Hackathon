@@ -48,7 +48,7 @@ async function userProfile() {
 
       // Agar user index page par hai to home page par bhej do
       if (window.location.pathname.includes("index.html")) {
-        window.location.href = "/Html/create-post.html";
+        window.location.href = "/Html/All-posts.html";
       }
     } else {
       console.log("User not found, redirecting...");
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Agar session mila to home page par bhej do
     if (session) {
-      window.location.href = "/Html/create-post.html";
+      window.location.href = "/Html/All-posts.html";
       return;
     }
   }
@@ -125,7 +125,7 @@ async function logout() {
       });
 
       setTimeout(() => {
-        window.location.href = "/Html/login.html";
+        window.location.href = "/Html/All-posts.html";
       }, 1500);
     }
   } catch (error) {
@@ -258,7 +258,7 @@ async function login(e) {
       });
 
       setTimeout(() => {
-        window.location.href = "/Html/create-post.html";
+        window.location.href = "/Html/All-posts.html";
       }, 1500);
     } catch (error) {
       console.error(error);
