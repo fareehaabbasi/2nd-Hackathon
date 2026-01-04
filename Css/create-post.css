@@ -1,0 +1,214 @@
+body {
+  height: 100vh;
+  font-family: "Poppins", sans-serif;
+  
+}
+
+/* ===== NAVBAR ===== */
+.admin-navbar {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  padding: 12px 20px;
+}
+
+.admin-navbar .navbar-brand {
+  color: #ffffff;
+  font-size: 18px;
+}
+
+/* ===== USER INFO ===== */
+.user-info {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 6px 12px;
+  border-radius: 30px;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+/* User avatar circle */
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  background: #ffffff;
+  color: #4f46e5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+/* ===== LOGOUT BUTTON ===== */
+.btn-logout {
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  background: transparent;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-weight: 500;
+}
+
+.btn-logout:hover {
+  background: #ffffff;
+  color: #4f46e5;
+}
+
+
+/* ===== Create Post Page ===== */
+.card {
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+
+.card-body h5 {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* form labels */
+.form-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+/* inputs */
+.form-control {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  height: 46px;
+  font-size: 14px;
+  color: #1f2937;
+}
+
+textarea.form-control {
+  height: auto;
+}
+
+.form-control::placeholder {
+  color: #9ca3af;
+}
+
+.form-control:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
+  background: #ffffff;
+}
+/* ===== MAIN CONTENT ===== */
+.admin-content {
+  padding: 40px 20px;
+}
+
+/* ===== CARD ===== */
+.card {
+  border-radius: 22px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+.card-body {
+  padding: 30px;
+}
+
+/* ===== HEADING ===== */
+.card h5 {
+  color: #4f46e5;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+}
+
+/* ===== FORM LABELS ===== */
+.form-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+/* ===== INPUTS & TEXTAREA ===== */
+.form-control {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  color: #1f2937;
+  height: 48px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+textarea.form-control {
+  height: auto;
+  resize: none;
+}
+
+.form-control::placeholder {
+  color: #9ca3af;
+}
+
+.form-control:focus {
+  background: #ffffff;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
+}
+
+/* ===== FILE INPUT ===== */
+input[type="file"] {
+  padding: 10px;
+}
+
+/* ===== BUTTON ===== */
+.btn-cobalt {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: #ffffff;
+  border: none;
+  height: 50px;
+  border-radius: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-cobalt:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(79, 70, 229, 0.35);
+}
+
+
+/* publish button */
+.btn-cobalt {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  border: none;
+  height: 48px;
+  border-radius: 14px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.btn-cobalt:hover {
+  box-shadow: 0 8px 18px rgba(79, 70, 229, 0.35);
+  transform: translateY(-1px);
+}
+
+/* file input */
+input[type="file"] {
+  padding: 10px;
+}
+
+/* page spacing */
+.admin-content {
+  padding-top: 32px;
+}
+
+
+/* loader */
+#loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.65);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}

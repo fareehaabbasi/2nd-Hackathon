@@ -9,6 +9,20 @@ function hideLoader() {
   loader.style.display = "none";
 }
 
+// ---------------------User Profile Functionality
+const userName = document.querySelector(".user-name");
+
+// Fetch user
+async function loadUser() {
+  const { data } = await client.auth.getUser();
+  if (data.user) {
+    userName.textContent =
+      data.user.user_metadata?.email || "User";
+  }
+}
+
+loadUser();
+
 //------------user profile functionality
 async function userProfile() {
   try {
@@ -34,7 +48,7 @@ async function userProfile() {
 
       // Agar user index page par hai to home page par bhej do
       if (window.location.pathname.includes("index.html")) {
-        window.location.href = "home.html";
+        window.location.href = "/Html/create-post.html";
       }
     } else {
       console.log("User not found, redirecting...");
@@ -69,7 +83,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Agar session mila to home page par bhej do
     if (session) {
-      window.location.href = "home.html";
+      window.location.href = "/Html/create-post.html";
       return;
     }
   }
@@ -86,7 +100,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 //----------------logout functionality
-let logoutBtn = document.getElementById("logout-btn");
+let logoutBtn = document.querySelector(".btn-logout");
 
 async function logout() {
   try {
@@ -111,7 +125,7 @@ async function logout() {
       });
 
       setTimeout(() => {
-        window.location.href = "login.html";
+        window.location.href = "/Html/login.html";
       }, 1500);
     }
   } catch (error) {
@@ -244,7 +258,7 @@ async function login(e) {
       });
 
       setTimeout(() => {
-        window.location.href = "home.html";
+        window.location.href = "/Html/create-post.html";
       }, 1500);
     } catch (error) {
       console.error(error);
