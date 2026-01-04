@@ -1,4 +1,4 @@
-import client from "../config.js";
+import client from "./config.js";
 
 const loader = document.getElementById("loader-overlay");
 const postsContainer = document.getElementById("postsContainer");
