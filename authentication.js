@@ -9,20 +9,6 @@ function hideLoader() {
   loader.style.display = "none";
 }
 
-// ---------------------User Profile Functionality
-const userName = document.querySelector(".user-name");
-
-// Fetch user
-async function loadUser() {
-  const { data } = await client.auth.getUser();
-  if (data.user) {
-    userName.textContent =
-      data.user.user_metadata?.email || "User";
-  }
-}
-
-loadUser();
-
 //------------user profile functionality
 async function userProfile() {
   try {
@@ -38,7 +24,7 @@ async function userProfile() {
     // Agar user mil gaya (matlab user logged in hai)
     if (user) {
       console.log("User Profile:", user);
-      let profileName = document.getElementById("profile-name");
+      let profileName = document.querySelector(".user-name");
       // let profileEmail = document.getElementById("profile-email");
       // let profilePhone = document.getElementById("profile-phone");
 
@@ -171,17 +157,14 @@ async function signup(e) {
       if (error) throw error;
 
       const user = data.user;
-
-      // 2️⃣ INSERT INTO customers TABLE (🔥 MOST IMPORTANT)
-      const { error: dbError } = await client.from("customers").insert({
-        uid: user.id,
-        email: user.email,
-        name: signName.value,
-        phone: signPhone.value,
-        role: "user", // default role
+      // 2️⃣ INSERT INTO profiles TABLE (FOR POSTS FK)
+      const { error: profileError } = await client.from("profiles").insert({
+        uid: user.id,          // MUST match Supabase Auth user ID
+        username: signName.value,
+        email: signEmail.value,
+        avatar_url: null       // optional, user can update later
       });
-
-      if (dbError) throw dbError;
+      if (profileError) throw profileError;
 
       Swal.fire({
         title: "Sign up successful!",

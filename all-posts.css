@@ -119,3 +119,9 @@ body {
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
 }
+
+.user-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+}

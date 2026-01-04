@@ -91,6 +91,7 @@ form.addEventListener("submit", async (e) => {
         content,
         category,
         imageUrl,
+        user_id: user.id
       },
     ]);
 

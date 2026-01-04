@@ -1,0 +1,28 @@
+.back-btn {
+  border: 1px solid #dee2e6;
+  background: #fff;
+  color: #333;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.25s ease;
+}
+
+.back-btn:hover {
+  background: #0d6efd;
+  color: #fff;
+  border-color: #0d6efd;
+  transform: translateX(-3px);
+}
+
+.back-btn i {
+  font-size: 14px;
+}
+
+.back-btn {
+  backdrop-filter: blur(6px);
+  background: rgba(255,255,255,0.85);
+}

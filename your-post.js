@@ -36,21 +36,44 @@ async function fetchMyPosts() {
       const postDiv = document.createElement("div");
       postDiv.className = "col-md-6 mb-4 post-card";
 
-      postDiv.innerHTML = `
-        <div class="card shadow-sm h-100">
-          ${post.imageUrl ? `<img src="${post.imageUrl}" class="card-img-top" style="object-fit: cover; height:300px;" alt="Post Image">` : ""}
-          <div class="card-body">
-            <span class="badge bg-primary mb-2">${post.category}</span>
-            <h5 class="card-title">${post.title}</h5>
-            <p class="card-text">${post.content}</p>
-            <div class="text-muted small mt-2 mb-2">Posted at: ${new Date(post.created_at).toLocaleString()}</div>
-            <div class="d-flex gap-2">
-              <button class="btn btn-sm btn-warning edit-btn" data-id="${post.id}">Edit</button>
-              <button class="btn btn-sm btn-danger delete-btn" data-id="${post.id}">Delete</button>
-            </div>
-          </div>
-        </div>
-      `;
+       postDiv.innerHTML = `
+      <div class="card-body">
+  <div class="card shadow-sm h-100">
+    ${
+      post.imageUrl
+        ? `
+      <img src="${post.imageUrl}" class="card-img-top" 
+           style="height:200px; object-fit:cover;">
+    `
+        : ""
+    }
+    <div class="card-body">
+      <span class="badge bg-primary mb-2">${post.category}</span>
+
+      <h5 class="card-title">${post.title}</h5>
+
+      <p class="card-text">
+        ${
+          post.content.length > 120
+            ? post.content.slice(0, 120) + "..."
+            : post.content
+        }
+      </p>
+
+      <div class="d-flex justify-content-between align-items-center">
+        <small class="text-muted">
+          ${new Date(post.created_at).toLocaleDateString()}
+        </small>
+
+        <!-- READ MORE BUTTON -->
+        <a href="post-detail.html?id=${post.id}" 
+           class="btn btn-sm btn-outline-primary">
+          Read More
+        </a>
+      </div>
+    </div>
+  </div>
+`;
 
       postsContainer.appendChild(postDiv);
     });
