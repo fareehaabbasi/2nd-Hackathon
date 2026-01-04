@@ -1,0 +1,8 @@
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0b0b0b; /* velvet black */
+  font-family: "Poppins", sans-serif;
+}

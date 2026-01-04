@@ -1,0 +1,135 @@
+/* ===== Global ===== */
+body {
+  background: #f9fafb;
+  color: #1f2937;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ===== Navbar ===== */
+.admin-navbar {
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: #ffffff;
+  padding: 12px 20px;
+}
+
+.admin-navbar .navbar-brand {
+  color: #ffffff;
+  font-size: 18px;
+}
+
+.admin-navbar .btn-outline-dark {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+.admin-navbar .btn-outline-dark:hover {
+  background: #ffffff;
+  color: #4f46e5;
+}
+
+/* ===== Sidebar (agar use ho rahi ho) ===== */
+.admin-sidebar {
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+}
+
+.admin-sidebar a {
+  color: #374151;
+}
+
+.admin-sidebar a:hover,
+.admin-sidebar a.active {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+/* ===== Content ===== */
+.admin-content {
+  background: #f9fafb;
+  padding: 24px;
+}
+
+.admin-content h3 {
+  color: #1f2937;
+}
+
+.admin-content p {
+  color: #6b7280;
+}
+
+/* ===== Buttons ===== */
+.logout-btn {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+.logout-btn:hover {
+  background: #ffffff;
+  color: #4f46e5;
+}
+
+/* ===== Loader ===== */
+#loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* ===== Home Page ===== */
+.admin-content {
+  background: #f9fafb;
+  min-height: calc(100vh - 60px);
+  padding: 32px;
+}
+
+/* Heading */
+.admin-content h3 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* Welcome text */
+.admin-content p {
+  font-size: 15px;
+  color: #6b7280;
+  margin-bottom: 24px;
+}
+
+/* Home Card */
+.home-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  padding: 24px;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.06);
+}
+
+/* Icon circle */
+.home-icon {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+
+/* Quick info text */
+.home-card h5 {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.home-card span {
+  font-size: 14px;
+  color: #6b7280;
+}
