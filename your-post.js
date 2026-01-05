@@ -2,8 +2,12 @@ import client from "./config.js";
 
 // -------------------- Loader
 const loader = document.getElementById("loader-overlay");
-function showLoader() { loader.style.display = "flex"; }
-function hideLoader() { loader.style.display = "none"; }
+function showLoader() {
+  loader.style.display = "flex";
+}
+function hideLoader() {
+  loader.style.display = "none";
+}
 
 // -------------------- Containers
 const postsContainer = document.getElementById("myPostsContainer");
@@ -14,7 +18,10 @@ async function fetchMyPosts() {
   showLoader();
   try {
     // Current User
-    const { data: { user }, error: userError } = await client.auth.getUser();
+    const {
+      data: { user },
+      error: userError,
+    } = await client.auth.getUser();
     if (userError || !user) throw new Error("User not authenticated");
 
     const { data: posts, error } = await client
@@ -36,8 +43,8 @@ async function fetchMyPosts() {
       const postDiv = document.createElement("div");
       postDiv.className = "col-md-6 mb-4 post-card";
 
-       postDiv.innerHTML = `
-      <div class="card-body">
+      postDiv.innerHTML = `
+    <div class="card-body">
   <div class="card shadow-sm h-100">
     ${
       post.imageUrl
@@ -48,6 +55,10 @@ async function fetchMyPosts() {
         : ""
     }
     <div class="card-body">
+    <div class="d-flex align-items-center gap-2 mb-2">
+          <i class="bi bi-person-circle fs-5"></i>
+          <strong>${post.profiles?.username || "Unknown"}</strong>
+        </div>
       <span class="badge bg-primary mb-2">${post.category}</span>
 
       <h5 class="card-title">${post.title}</h5>
@@ -71,14 +82,30 @@ async function fetchMyPosts() {
           Read More
         </a>
       </div>
+
+          <!-- Edit & Delete -->
+          <div>
+            <button class="btn btn-sm btn-warning edit-btn" data-id="${
+              post.id
+            }">
+              <i class="bi bi-pencil-square"></i> Edit
+            </button>
+            <button class="btn btn-sm btn-danger delete-btn" data-id="${
+              post.id
+            }">
+              <i class="bi bi-trash"></i> Delete
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-`;
+  `;
 
       postsContainer.appendChild(postDiv);
     });
 
-    attachActionButtons(); // Attach edit & delete handlers after rendering
+    // Attach action buttons after cards are rendered
+    attachActionButtons();
   } catch (err) {
     console.error("Error fetching posts:", err);
     postsContainer.innerHTML = `<p class="text-danger">Error loading posts: ${err.message}</p>`;
@@ -133,7 +160,11 @@ async function editPost(id) {
   try {
     showLoader();
 
-    const { data, error } = await client.from("posts").select("*").eq("id", id).single();
+    const { data, error } = await client
+      .from("posts")
+      .select("*")
+      .eq("id", id)
+      .single();
     if (error) throw error;
 
     document.getElementById("editPostId").value = data.id;
@@ -153,48 +184,53 @@ async function editPost(id) {
 window.editPost = editPost; // Make globally accessible
 
 // -------------------- Update Post
-document.getElementById("editPostForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
+document
+  .getElementById("editPostForm")
+  .addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  const id = document.getElementById("editPostId").value;
+    const id = document.getElementById("editPostId").value;
 
-  try {
-    showLoader();
+    try {
+      showLoader();
 
-    const updatedData = {
-      title: document.getElementById("editTitle").value,
-      content: document.getElementById("editContent").value,
-      category: document.getElementById("editCategory").value,
-    };
+      const updatedData = {
+        title: document.getElementById("editTitle").value,
+        content: document.getElementById("editContent").value,
+        category: document.getElementById("editCategory").value,
+      };
 
-    // Optional image update
-    const imageFile = document.getElementById("editImage").files[0];
-    if (imageFile) {
-      const fileName = `${Date.now()}_${imageFile.name}`;
-      const { data: uploadData, error: uploadError } = await client.storage
-        .from("post-images")
-        .upload(fileName, imageFile);
-      if (uploadError) throw uploadError;
+      // Optional image update
+      const imageFile = document.getElementById("editImage").files[0];
+      if (imageFile) {
+        const fileName = `${Date.now()}_${imageFile.name}`;
+        const { data: uploadData, error: uploadError } = await client.storage
+          .from("post-images")
+          .upload(fileName, imageFile);
+        if (uploadError) throw uploadError;
 
-      const { data: publicData } = client.storage
-        .from("post-images")
-        .getPublicUrl(uploadData.path);
-      updatedData.imageUrl = publicData.publicUrl;
+        const { data: publicData } = client.storage
+          .from("post-images")
+          .getPublicUrl(uploadData.path);
+        updatedData.imageUrl = publicData.publicUrl;
+      }
+
+      const { error } = await client
+        .from("posts")
+        .update(updatedData)
+        .eq("id", id);
+      if (error) throw error;
+
+      Swal.fire("Success", "Post updated successfully!", "success");
+      editModal.hide();
+      fetchMyPosts(); // Refresh posts list
+    } catch (err) {
+      console.error("Error updating post:", err);
+      Swal.fire("Error", err.message, "error");
+    } finally {
+      hideLoader();
     }
-
-    const { error } = await client.from("posts").update(updatedData).eq("id", id);
-    if (error) throw error;
-
-    Swal.fire("Success", "Post updated successfully!", "success");
-    editModal.hide();
-    fetchMyPosts(); // Refresh posts list
-  } catch (err) {
-    console.error("Error updating post:", err);
-    Swal.fire("Error", err.message, "error");
-  } finally {
-    hideLoader();
-  }
-});
+  });
 
 // -------------------- Initial fetch
 fetchMyPosts();
